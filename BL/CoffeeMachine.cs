@@ -1,4 +1,6 @@
 ﻿using BL.Exceptions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BL
 {
@@ -31,7 +33,16 @@ namespace BL
                 throw new NoWaterException("Cannot brew coffee as there is no water in the machines boiler");
 
             _boilingSystem.GetHeater().TurnOn();
+            WaitForCoffeeCooking();
+        }
 
+        private async void WaitForCoffeeCooking()
+        {
+            await new TaskFactory().StartNew(() =>
+            {
+                while (_warmingSystem.GetPot().IsEmpty)
+                    Thread.Sleep(1000);
+            });
         }
 
         public event MachineLight LightIsOn;
