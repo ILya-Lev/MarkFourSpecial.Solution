@@ -9,6 +9,20 @@
         public decimal MajorRate { get; set; }
         public decimal? MinorRate { get; set; }
         //public DeliveryMethod DeliveryMethod { get; set; }
+        public Employee()
+        {
+
+        }
+
+        public Employee(Employee other)
+        {
+            Id = other.Id;
+            Name = other.Name;
+            Address = other.Address;
+            PaymentType = other.PaymentType;
+            MajorRate = other.MajorRate;
+            MinorRate = other.MinorRate;
+        }
     }
 
     //public class DeliveryMethod
