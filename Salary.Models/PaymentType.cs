@@ -2,8 +2,8 @@
 {
     public enum PaymentType
     {
-        H,
-        S,
-        C
+        Hourly,
+        Salary,
+        Commissioned
     }
 }

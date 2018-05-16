@@ -1,7 +1,6 @@
 ﻿using Salary.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Salary.DataAccess.InMemory
 {
@@ -23,6 +22,13 @@ namespace Salary.DataAccess.InMemory
             return id;
         }
 
+        public Employee Delete(int employeeId)
+        {
+            var anEmployee = Get(employeeId);
+            _storage.Remove(employeeId);
+            return anEmployee;
+        }
+
         public Employee Get(int employeeId)
         {
             if (!_storage.ContainsKey(employeeId))
@@ -33,25 +39,55 @@ namespace Salary.DataAccess.InMemory
             return _storage[employeeId];
         }
 
-
-        public Employee Update(Employee editedEmployee)
+        public Employee UpdateName(int employeeId, string name)
         {
-            var oldEmployee = Get(editedEmployee.Id);
-            //todo how to do it via reflection? or just introduce a bunch of update methods
-            //for each case
-            var props = typeof(Employee).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var prop in props)
-            {
-                var value = prop.GetValue(editedEmployee);
-                prop.SetValue(oldEmployee, value);
-            }
+            var oldEmployee = Get(employeeId);
+
+            oldEmployee.Name = name;
+
+            return oldEmployee;
         }
 
-        public Employee Delete(int employeeId)
+        public Employee UpdateAddress(int employeeId, string address)
         {
-            var anEmployee = Get(employeeId);
-            _storage.Remove(employeeId);
-            return anEmployee;
+            var oldEmployee = Get(employeeId);
+
+            oldEmployee.Address = address;
+
+            return oldEmployee;
+        }
+
+        public Employee UpdateHourly(int employeeId, decimal hourlyRate)
+        {
+            var oldEmployee = Get(employeeId);
+
+            oldEmployee.PaymentType = PaymentType.Hourly;
+            oldEmployee.MajorRate = hourlyRate;
+            oldEmployee.MinorRate = null;
+
+            return oldEmployee;
+        }
+
+        public Employee UpdateSalaried(int employeeId, decimal salary)
+        {
+            var oldEmployee = Get(employeeId);
+
+            oldEmployee.PaymentType = PaymentType.Salary;
+            oldEmployee.MajorRate = salary;
+            oldEmployee.MinorRate = null;
+
+            return oldEmployee;
+        }
+
+        public Employee UpdateCommissioned(int employeeId, decimal salary, decimal rate)
+        {
+            var oldEmployee = Get(employeeId);
+
+            oldEmployee.PaymentType = PaymentType.Commissioned;
+            oldEmployee.MajorRate = salary;
+            oldEmployee.MinorRate = rate;
+
+            return oldEmployee;
         }
     }
 }

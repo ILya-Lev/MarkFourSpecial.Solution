@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace Salary.Models
+﻿namespace Salary.Models
 {
-    public class TimeCard
+    public class TimeCard : EntityForEmployee
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public DateTime Date { get; set; }
         public float Hours { get; set; }
     }
 }

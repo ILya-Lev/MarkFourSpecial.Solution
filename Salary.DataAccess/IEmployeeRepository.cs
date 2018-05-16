@@ -5,8 +5,14 @@ namespace Salary.DataAccess
     public interface IEmployeeRepository
     {
         int Create(Employee inMemoryInstance);
-        Employee Get(int employeeId);
-        Employee Update(Employee editedEmployee);
         Employee Delete(int employeeId);
+
+        Employee Get(int employeeId);
+
+        Employee UpdateName(int employeeId, string name);
+        Employee UpdateAddress(int employeeId, string address);
+        Employee UpdateHourly(int employeeId, decimal hourlyRate);
+        Employee UpdateSalaried(int employeeId, decimal salary);
+        Employee UpdateCommissioned(int employeeId, decimal salary, decimal rate);
     }
 }

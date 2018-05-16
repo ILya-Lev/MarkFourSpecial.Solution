@@ -4,20 +4,23 @@ namespace Salary.Services
 {
     public class SalaryCalculationService : ISalaryCalculationService
     {
-        private readonly IPayrollStrategy _payrollStrategy;
-        private readonly IChargeStrategy _chargeStrategy;
+        private readonly IPayrollStrategyFactory _payrollStrategyFactory;
+        private readonly IChargeStrategyFactory _chargeStrategyFactory;
 
-        public SalaryCalculationService(IPayrollStrategy payrollStrategy,
-            IChargeStrategy chargeStrategy)
+        public SalaryCalculationService(IPayrollStrategyFactory payrollStrategyFactory,
+                                        IChargeStrategyFactory chargeStrategyFactory)
         {
-            _payrollStrategy = payrollStrategy;
-            _chargeStrategy = chargeStrategy;
+            _payrollStrategyFactory = payrollStrategyFactory;
+            _chargeStrategyFactory = chargeStrategyFactory;
         }
 
         public decimal GetSalary(int employeeId, DateTime forDate)
         {
-            var payroll = _payrollStrategy.GetPayroll(employeeId, forDate);
-            var charge = _chargeStrategy.GetCharge(employeeId, forDate);
+            var payrollStrategy = _payrollStrategyFactory.GetStrategy(employeeId);
+            var payroll = payrollStrategy.GetPayroll(employeeId, forDate);
+
+            var chargeStrategy = _chargeStrategyFactory.GetStrategy(employeeId);
+            var charge = chargeStrategy.GetCharge(employeeId, forDate);
 
             return payroll - charge;
         }

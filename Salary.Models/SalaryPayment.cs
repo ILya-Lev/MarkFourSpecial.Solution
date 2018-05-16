@@ -1,6 +1,6 @@
 ﻿namespace Salary.Models
 {
-    public class SalesReceipt : EntityForEmployee
+    public class SalaryPayment : EntityForEmployee
     {
         public decimal Amount { get; set; }
     }
