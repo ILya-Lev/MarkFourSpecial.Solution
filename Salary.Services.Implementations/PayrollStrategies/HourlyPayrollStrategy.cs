@@ -1,9 +1,9 @@
-﻿using Salary.DataAccess;
-using Salary.Models;
-using System;
+﻿using System;
 using System.Linq;
+using Salary.DataAccess;
+using Salary.Models;
 
-namespace Salary.Services.Implementation
+namespace Salary.Services.Implementation.PayrollStrategies
 {
     public class HourlyPayrollStrategy : IPayrollStrategy
     {
@@ -12,24 +12,26 @@ namespace Salary.Services.Implementation
 
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IEntityForEmployeeRepository<TimeCard> _timeCardRepository;
-        private readonly IEntityForEmployeeRepository<SalaryPayment> _salaryPaymentRepository;
 
-        public HourlyPayrollStrategy(IEmployeeRepository employeeRepository, IEntityForEmployeeRepository<TimeCard> timeCardRepository, IEntityForEmployeeRepository<SalaryPayment> salaryPaymentRepository)
+        public HourlyPayrollStrategy(IEmployeeRepository employeeRepository,
+            IEntityForEmployeeRepository<TimeCard> timeCardRepository)
         {
             _employeeRepository = employeeRepository;
             _timeCardRepository = timeCardRepository;
-            _salaryPaymentRepository = salaryPaymentRepository;
         }
 
         public decimal GetPayroll(int employeeId, DateTime forDate)
         {
+            if (forDate.DayOfWeek != DayOfWeek.Friday)
+            {
+                return 0m;
+            }
+
             var employee = _employeeRepository.Get(employeeId);
 
-            var payments = _salaryPaymentRepository.GetForEmployee(employeeId, null, DateTime.Now);
-            var lastTimePayed = payments.OrderByDescending(sp => sp.Date).FirstOrDefault()?.Date;
-            var timeCards = _timeCardRepository.GetForEmployee(employeeId, lastTimePayed, DateTime.Now);
+            var timeCards = _timeCardRepository.GetForEmployee(employeeId, forDate.Subtract(TimeSpan.FromDays(7)), forDate);
 
-            return timeCards.Select(tc => EffectiveHours(tc.Hours) * employee.MajorRate).Sum();
+            return timeCards.Select(tc => EffectiveHours(tc.Hours)).Sum() * employee.MajorRate;
         }
 
         private static decimal EffectiveHours(float hours)

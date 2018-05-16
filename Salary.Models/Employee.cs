@@ -9,6 +9,7 @@
         public decimal MajorRate { get; set; }
         public decimal? MinorRate { get; set; }
         //public DeliveryMethod DeliveryMethod { get; set; }
+        public decimal? TradeUnionCharge { get; set; }
         public Employee()
         {
 
@@ -22,6 +23,7 @@
             PaymentType = other.PaymentType;
             MajorRate = other.MajorRate;
             MinorRate = other.MinorRate;
+            TradeUnionCharge = other.TradeUnionCharge;
         }
     }
 
