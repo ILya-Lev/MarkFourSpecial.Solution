@@ -7,17 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{2995
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kettle.BL", "Kettle.BL\Kettle.BL.csproj", "{A910C527-8312-484C-A35A-D64D19646401}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BobsMachine", "BobsMachine\BobsMachine.csproj", "{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BobsMachine", "BobsMachine\BobsMachine.csproj", "{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.Models", "Salary.Models\Salary.Models.csproj", "{FE521539-F995-45DC-B0D6-04B544A83379}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.Models", "Salary.Models\Salary.Models.csproj", "{FE521539-F995-45DC-B0D6-04B544A83379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.Services", "Salary.Services\Salary.Services.csproj", "{F71AD7CD-8FA5-4A3E-9DCE-0CF25A0581D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.Services", "Salary.Services\Salary.Services.csproj", "{F71AD7CD-8FA5-4A3E-9DCE-0CF25A0581D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.Services.Implementation", "Salary.Services.Implementations\Salary.Services.Implementation.csproj", "{D2AED428-53C9-419A-97E0-EE63DBA09D01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.Services.Implementation", "Salary.Services.Implementations\Salary.Services.Implementation.csproj", "{D2AED428-53C9-419A-97E0-EE63DBA09D01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.DataAccess", "Salary.DataAccess\Salary.DataAccess.csproj", "{4B894D06-3DDA-4ABC-8F5F-55E1DAEA7E94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess", "Salary.DataAccess\Salary.DataAccess.csproj", "{4B894D06-3DDA-4ABC-8F5F-55E1DAEA7E94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.DataAccess.InMemory", "Salary.DataAccess.InMemory\Salary.DataAccess.InMemory.csproj", "{F420CE28-27E9-400C-BD0F-A66C05F6F4D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess.InMemory", "Salary.DataAccess.InMemory\Salary.DataAccess.InMemory.csproj", "{F420CE28-27E9-400C-BD0F-A66C05F6F4D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.WebApi", "Salary.WebApi\Salary.WebApi.csproj", "{74B272F4-0C79-4B34-9936-CF43063ED45C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{F420CE28-27E9-400C-BD0F-A66C05F6F4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F420CE28-27E9-400C-BD0F-A66C05F6F4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F420CE28-27E9-400C-BD0F-A66C05F6F4D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B272F4-0C79-4B34-9936-CF43063ED45C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B272F4-0C79-4B34-9936-CF43063ED45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B272F4-0C79-4B34-9936-CF43063ED45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B272F4-0C79-4B34-9936-CF43063ED45C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

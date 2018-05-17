@@ -1,8 +1,8 @@
 ﻿using Salary.Models;
+using Salary.Models.Errors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Salary.Models.Errors;
 
 namespace Salary.DataAccess.InMemory
 {
@@ -12,7 +12,7 @@ namespace Salary.DataAccess.InMemory
 
         public int Create<T>(T inMemoryInstance, Func<T, EntityForEmployee> cloner) where T : EntityForEmployee
         {
-            var id = _storage.Keys.Max() + 1;
+            var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
 
             var clone = cloner(inMemoryInstance);
             clone.Id = id;

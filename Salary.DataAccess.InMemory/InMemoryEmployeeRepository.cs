@@ -1,7 +1,7 @@
 ﻿using Salary.Models;
+using Salary.Models.Errors;
 using System.Collections.Generic;
 using System.Linq;
-using Salary.Models.Errors;
 
 namespace Salary.DataAccess.InMemory
 {
@@ -17,7 +17,7 @@ namespace Salary.DataAccess.InMemory
                     $"Employee with id '{inMemoryInstance.Id}' already exists, cannot re-create.");
             }
 
-            var id = _storage.Keys.Max() + 1;
+            var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
             var storedEmployee = new Employee(inMemoryInstance) { Id = id };
             _storage.Add(id, storedEmployee);
             return id;
