@@ -1,6 +1,7 @@
 ﻿using Salary.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Salary.Models.Errors;
 
 namespace Salary.DataAccess.InMemory
 {

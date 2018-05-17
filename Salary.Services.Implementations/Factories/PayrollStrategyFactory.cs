@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Salary.DataAccess;
+﻿using Salary.DataAccess;
 using Salary.Models;
+using Salary.Models.Errors;
+using System.Collections.Generic;
 
 namespace Salary.Services.Implementation.Factories
 {
@@ -29,7 +29,7 @@ namespace Salary.Services.Implementation.Factories
                 return _supportedStrategies[employee.PaymentType];
             }
 
-            throw new Exception($"Missing payroll strategy for payment type {employee.PaymentType}");
+            throw new StrategyException($"Missing payroll strategy for payment type {employee.PaymentType}");
         }
     }
 }

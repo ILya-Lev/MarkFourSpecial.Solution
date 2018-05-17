@@ -1,4 +1,5 @@
 ﻿using Salary.DataAccess;
+using Salary.Models.Errors;
 using System;
 
 namespace Salary.Services.Implementation.ChargeStrategies
@@ -18,7 +19,7 @@ namespace Salary.Services.Implementation.ChargeStrategies
             if (!employee.TradeUnionCharge.HasValue)
                 return 0m;
 
-            throw new Exception($"{nameof(NoneChargeStrategy)} is used for an employee {employeeId} which is a trade union member");
+            throw new StrategyException($"{nameof(NoneChargeStrategy)} is used for an employee {employeeId} which is a trade union member");
         }
     }
 }

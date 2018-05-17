@@ -1,5 +1,6 @@
 ﻿using Salary.DataAccess;
 using Salary.Models;
+using Salary.Models.Errors;
 using System;
 using System.Linq;
 
@@ -24,7 +25,7 @@ namespace Salary.Services.Implementation.ChargeStrategies
             var employee = _employeeRepository.Get(employeeId);
             if (!employee.TradeUnionCharge.HasValue)
             {
-                throw new Exception($"{nameof(TradeUnionChargeStrategy)} is used for an employee {employeeId} which is not a trade union member");
+                throw new StrategyException($"{nameof(TradeUnionChargeStrategy)} is used for an employee {employeeId} which is not a trade union member");
             }
 
             var paymentsForMonth = _salaryPaymentRepository.GetForEmployee(employeeId, forDate.Subtract(TimeSpan.FromDays(31)), forDate);

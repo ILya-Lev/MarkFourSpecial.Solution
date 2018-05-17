@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Salary.DataAccess.InMemory
+namespace Salary.Models.Errors
 {
     public class RepositoryException : Exception
     {
