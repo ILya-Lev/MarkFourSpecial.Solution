@@ -14,5 +14,6 @@ namespace Salary.DataAccess
         Employee UpdateHourly(int employeeId, decimal hourlyRate);
         Employee UpdateSalaried(int employeeId, decimal salary);
         Employee UpdateCommissioned(int employeeId, decimal salary, decimal rate);
+        Employee UpdateTradeUnionCharge(int employeeId, decimal? charge);
     }
 }

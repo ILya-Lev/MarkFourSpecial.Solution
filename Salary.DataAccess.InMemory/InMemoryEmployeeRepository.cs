@@ -28,9 +28,9 @@ namespace Salary.DataAccess.InMemory
 
         public Employee Delete(int employeeId)
         {
-            var anEmployee = Get(employeeId);
+            var employee = Get(employeeId);
             _storage.Remove(employeeId);
-            return anEmployee;
+            return employee;
         }
 
         public Employee Get(int employeeId)
@@ -48,53 +48,62 @@ namespace Salary.DataAccess.InMemory
 
         public Employee UpdateName(int employeeId, string name)
         {
-            var oldEmployee = Get(employeeId);
+            var employee = Get(employeeId);
 
-            oldEmployee.Name = name;
+            employee.Name = name;
 
-            return oldEmployee;
+            return employee;
         }
 
         public Employee UpdateAddress(int employeeId, string address)
         {
-            var oldEmployee = Get(employeeId);
+            var employee = Get(employeeId);
 
-            oldEmployee.Address = address;
+            employee.Address = address;
 
-            return oldEmployee;
+            return employee;
         }
 
         public Employee UpdateHourly(int employeeId, decimal hourlyRate)
         {
-            var oldEmployee = Get(employeeId);
+            var employee = Get(employeeId);
 
-            oldEmployee.PaymentType = PaymentType.Hourly;
-            oldEmployee.MajorRate = hourlyRate;
-            oldEmployee.MinorRate = null;
+            employee.PaymentType = PaymentType.Hourly;
+            employee.MajorRate = hourlyRate;
+            employee.MinorRate = null;
 
-            return oldEmployee;
+            return employee;
         }
 
         public Employee UpdateSalaried(int employeeId, decimal salary)
         {
-            var oldEmployee = Get(employeeId);
+            var employee = Get(employeeId);
 
-            oldEmployee.PaymentType = PaymentType.Salary;
-            oldEmployee.MajorRate = salary;
-            oldEmployee.MinorRate = null;
+            employee.PaymentType = PaymentType.Salary;
+            employee.MajorRate = salary;
+            employee.MinorRate = null;
 
-            return oldEmployee;
+            return employee;
         }
 
         public Employee UpdateCommissioned(int employeeId, decimal salary, decimal rate)
         {
-            var oldEmployee = Get(employeeId);
+            var employee = Get(employeeId);
 
-            oldEmployee.PaymentType = PaymentType.Commissioned;
-            oldEmployee.MajorRate = salary;
-            oldEmployee.MinorRate = rate;
+            employee.PaymentType = PaymentType.Commissioned;
+            employee.MajorRate = salary;
+            employee.MinorRate = rate;
 
-            return oldEmployee;
+            return employee;
+        }
+
+        public Employee UpdateTradeUnionCharge(int employeeId, decimal? charge)
+        {
+            var employee = Get(employeeId);
+
+            employee.TradeUnionCharge = charge;
+
+            return employee;
         }
     }
 }

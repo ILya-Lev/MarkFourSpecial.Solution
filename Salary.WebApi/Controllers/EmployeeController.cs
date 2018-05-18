@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Salary.DataAccess;
 using Salary.Models;
+using System.Diagnostics;
 
 namespace Salary.WebApi.Controllers
 {
@@ -14,37 +15,71 @@ namespace Salary.WebApi.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "get")]
         public Employee Get(int id)
         {
             return _employeeRepository.Get(id);
         }
 
-        // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]Employee employee)
         {
-            return Ok(new
+            var creationResult = new
             {
                 employee.Name,
                 Id = _employeeRepository.Create(employee)
-            });
+            };
+
+            return new CreatedResult(Url.Link("get", new { id = creationResult.Id }), creationResult);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        [Route("UpdateAddress")]
-        public IActionResult Put(int id, [FromBody]string address)
+        [HttpPut("UpdateName/{id}")]
+        public IActionResult PutName(int id, [FromBody]string name)
+        {
+            return Ok(_employeeRepository.UpdateName(id, name));
+        }
+
+        [HttpPut("UpdateAddress/{id}")]
+        public IActionResult PutAddress(int id, [FromBody]string address)
         {
             return Ok(_employeeRepository.UpdateAddress(id, address));
         }
 
-        // DELETE api/values/5
+        [HttpPut("UpdateHourly/{id}")]
+        public IActionResult PutHourly(int id, [FromBody]decimal rate)
+        {
+            return Ok(_employeeRepository.UpdateHourly(id, rate));
+        }
+
+        [HttpPut("UpdateSalaried/{id}")]
+        public IActionResult PutSalaried(int id, [FromBody]decimal amount)
+        {
+            return Ok(_employeeRepository.UpdateSalaried(id, amount));
+        }
+
+        [HttpPut("UpdateCommissioned/{id}")]
+        public IActionResult PutCommissioned(int id, [FromBody]CommissionedRates rates)
+        {
+            return Ok(_employeeRepository.UpdateCommissioned(id, rates.Major, rates.Minor));
+        }
+
+        [HttpPut("UpdateTradeUnionCharge/{id}")]
+        public IActionResult PutTradeUnionCharge(int id, [FromBody]decimal? charge)
+        {
+            return Ok(_employeeRepository.UpdateTradeUnionCharge(id, charge));
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             return Ok(_employeeRepository.Delete(id));
         }
+    }
+
+    [DebuggerDisplay("{" + nameof(Major) + ("}; {" + nameof(Minor) + "}"))]
+    public class CommissionedRates
+    {
+        public decimal Major { get; set; }
+        public decimal Minor { get; set; }
     }
 }
