@@ -32,6 +32,7 @@ namespace Salary.WebApi
             builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>().SingleInstance();
             builder.RegisterType<InMemoryTimeCardRepository>().As<IEntityForEmployeeRepository<TimeCard>>().SingleInstance();
             builder.RegisterType<InMemorySalesReceiptRepository>().As<IEntityForEmployeeRepository<SalesReceipt>>().SingleInstance();
+            builder.RegisterType<InMemoryServiceChargeRepository>().As<IEntityForEmployeeRepository<ServiceCharge>>().SingleInstance();
 
             return new AutofacServiceProvider(builder.Build());
         }

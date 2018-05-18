@@ -57,7 +57,7 @@ namespace Salary.DataAccess.InMemory
         {
             var timeCards = _storage.Values.Where(val => val.EmployeeId == employeeId && predicate(val)).ToList();
             if (timeCards.Count == 0)
-                throw new RepositoryException($"Cannot find any time card with employee id '{employeeId}'{suffix}")
+                throw new RepositoryException($"Cannot find any {typeof(EntityForEmployee).Name} with employee id '{employeeId}'{suffix}")
                 {
                     StatusCode = HttpStatusCode.NotFound
                 };
