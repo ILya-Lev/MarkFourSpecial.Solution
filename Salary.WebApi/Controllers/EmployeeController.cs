@@ -15,7 +15,7 @@ namespace Salary.WebApi.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [HttpGet("{id}", Name = "get")]
+        [HttpGet("{id}", Name = "getEmployee")]
         public Employee Get(int id)
         {
             return _employeeRepository.Get(id);
@@ -30,7 +30,7 @@ namespace Salary.WebApi.Controllers
                 Id = _employeeRepository.Create(employee)
             };
 
-            return new CreatedResult(Url.Link("get", new { id = creationResult.Id }), creationResult);
+            return new CreatedResult(Url.Link("getEmployee", new { id = creationResult.Id }), creationResult);
         }
 
         [HttpPut("UpdateName/{id}")]

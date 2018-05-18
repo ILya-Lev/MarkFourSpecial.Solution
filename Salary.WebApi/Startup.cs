@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Salary.DataAccess;
 using Salary.DataAccess.InMemory;
+using Salary.Models;
 using Salary.WebApi.Middleware;
 using System;
 
@@ -29,6 +30,7 @@ namespace Salary.WebApi
 
             builder.Populate(services);
             builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>().SingleInstance();
+            builder.RegisterType<InMemoryTimeCardRepository>().As<IEntityForEmployeeRepository<TimeCard>>().SingleInstance();
 
             return new AutofacServiceProvider(builder.Build());
         }
