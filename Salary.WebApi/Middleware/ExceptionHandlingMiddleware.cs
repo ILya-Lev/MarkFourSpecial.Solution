@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Salary.Models.Errors;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@ namespace Salary.WebApi.Middleware
             }
             catch (RepositoryException exc)
             {
-                await HandleException(context, exc.Message, (int)HttpStatusCode.BadRequest);
+                await HandleException(context, exc.Message, (int)exc.StatusCode);
             }
             catch (StrategyException exc)
             {

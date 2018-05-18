@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Salary.DataAccess.InMemory;
+using Salary.DataAccess;
 using Salary.Models;
 
 namespace Salary.WebApi.Controllers
@@ -7,11 +7,11 @@ namespace Salary.WebApi.Controllers
     [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
-        private readonly InMemoryEmployeeRepository _employeeRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeeController()
+        public EmployeeController(IEmployeeRepository employeeRepository)
         {
-            _employeeRepository = new InMemoryEmployeeRepository();
+            _employeeRepository = employeeRepository;
         }
 
         // GET api/values/5

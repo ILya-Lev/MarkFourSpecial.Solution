@@ -2,6 +2,7 @@
 using Salary.Models.Errors;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Salary.DataAccess.InMemory
 {
@@ -13,8 +14,10 @@ namespace Salary.DataAccess.InMemory
         {
             if (inMemoryInstance.Id != 0 && _storage.ContainsKey(inMemoryInstance.Id))
             {
-                throw new RepositoryException(
-                    $"Employee with id '{inMemoryInstance.Id}' already exists, cannot re-create.");
+                throw new RepositoryException($"Employee with id '{inMemoryInstance.Id}' already exists, cannot re-create.")
+                {
+                    StatusCode = HttpStatusCode.Conflict
+                };
             }
 
             var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
@@ -34,7 +37,10 @@ namespace Salary.DataAccess.InMemory
         {
             if (!_storage.ContainsKey(employeeId))
             {
-                throw new RepositoryException($"Employee with id '{employeeId}' does not exist.");
+                throw new RepositoryException($"Employee with id '{employeeId}' does not exist.")
+                {
+                    StatusCode = HttpStatusCode.NotFound
+                };
             }
 
             return _storage[employeeId];

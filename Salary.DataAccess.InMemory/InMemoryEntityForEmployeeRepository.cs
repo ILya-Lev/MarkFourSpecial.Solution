@@ -3,6 +3,7 @@ using Salary.Models.Errors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Salary.DataAccess.InMemory
 {
@@ -25,7 +26,11 @@ namespace Salary.DataAccess.InMemory
         {
             if (_storage.ContainsKey(id))
                 return _storage[id];
-            throw new RepositoryException($"Cannot find {typeof(EntityForEmployee).Name} with id '{id}'.");
+
+            throw new RepositoryException($"Cannot find {typeof(EntityForEmployee).Name} with id '{id}'.")
+            {
+                StatusCode = HttpStatusCode.NotFound
+            };
         }
 
         public ICollection<EntityForEmployee> GetForEmployee(int employeeId, DateTime? since = null, DateTime? until = null)
@@ -52,7 +57,10 @@ namespace Salary.DataAccess.InMemory
         {
             var timeCards = _storage.Values.Where(val => val.EmployeeId == employeeId && predicate(val)).ToList();
             if (timeCards.Count == 0)
-                throw new RepositoryException($"Cannot find any time card with employee id '{employeeId}'{suffix}");
+                throw new RepositoryException($"Cannot find any time card with employee id '{employeeId}'{suffix}")
+                {
+                    StatusCode = HttpStatusCode.NotFound
+                };
             return timeCards;
         }
     }

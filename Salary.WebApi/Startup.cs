@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Salary.DataAccess;
+using Salary.DataAccess.InMemory;
 using Salary.WebApi.Middleware;
+using System;
 
 namespace Salary.WebApi
 {
@@ -16,9 +21,16 @@ namespace Salary.WebApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            var builder = new ContainerBuilder();
+
+            builder.Populate(services);
+            builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>().SingleInstance();
+
+            return new AutofacServiceProvider(builder.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
