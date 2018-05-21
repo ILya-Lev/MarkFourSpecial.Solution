@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess", "Salary
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess.InMemory", "Salary.DataAccess.InMemory\Salary.DataAccess.InMemory.csproj", "{F420CE28-27E9-400C-BD0F-A66C05F6F4D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.WebApi", "Salary.WebApi\Salary.WebApi.csproj", "{74B272F4-0C79-4B34-9936-CF43063ED45C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.WebApi", "Salary.WebApi\Salary.WebApi.csproj", "{74B272F4-0C79-4B34-9936-CF43063ED45C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SalaryTests", "SalaryTests", "{9AAB831F-47DC-40D5-9AEF-364D4B795C8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.DataAccess.InMemory.Tests", "Salary.DataAccess.InMemory.Tests\Salary.DataAccess.InMemory.Tests.csproj", "{AECFEF51-4098-437A-A20C-D90E04BDF126}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,9 +67,16 @@ Global
 		{74B272F4-0C79-4B34-9936-CF43063ED45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74B272F4-0C79-4B34-9936-CF43063ED45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74B272F4-0C79-4B34-9936-CF43063ED45C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AECFEF51-4098-437A-A20C-D90E04BDF126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AECFEF51-4098-437A-A20C-D90E04BDF126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AECFEF51-4098-437A-A20C-D90E04BDF126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AECFEF51-4098-437A-A20C-D90E04BDF126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AECFEF51-4098-437A-A20C-D90E04BDF126} = {9AAB831F-47DC-40D5-9AEF-364D4B795C8C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AD3E376-53E5-40E9-B56C-AA9CC9886293}
