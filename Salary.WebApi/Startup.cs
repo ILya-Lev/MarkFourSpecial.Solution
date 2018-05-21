@@ -7,6 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Salary.DataAccess;
 using Salary.DataAccess.InMemory;
 using Salary.Models;
+using Salary.Services;
+using Salary.Services.Implementation;
+using Salary.Services.Implementation.ChargeStrategies;
+using Salary.Services.Implementation.Factories;
+using Salary.Services.Implementation.PayrollStrategies;
 using Salary.WebApi.Middleware;
 using System;
 
@@ -20,23 +25,6 @@ namespace Salary.WebApi
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc();
-
-            var builder = new ContainerBuilder();
-
-            builder.Populate(services);
-            builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>().SingleInstance();
-            builder.RegisterType<InMemoryTimeCardRepository>().As<IEntityForEmployeeRepository<TimeCard>>().SingleInstance();
-            builder.RegisterType<InMemorySalesReceiptRepository>().As<IEntityForEmployeeRepository<SalesReceipt>>().SingleInstance();
-            builder.RegisterType<InMemoryServiceChargeRepository>().As<IEntityForEmployeeRepository<ServiceCharge>>().SingleInstance();
-
-            return new AutofacServiceProvider(builder.Build());
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -47,6 +35,46 @@ namespace Salary.WebApi
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseMvc();
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+
+            var builder = new ContainerBuilder();
+
+            builder.Populate(services);
+            RegisterRepositories(builder);
+            RegisterServices(builder);
+
+            return new AutofacServiceProvider(builder.Build());
+        }
+
+        private static void RegisterRepositories(ContainerBuilder builder)
+        {
+            builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>().SingleInstance();
+            builder.RegisterType<InMemoryTimeCardRepository>().As<IEntityForEmployeeRepository<TimeCard>>().SingleInstance();
+            builder.RegisterType<InMemorySalesReceiptRepository>().As<IEntityForEmployeeRepository<SalesReceipt>>()
+                .SingleInstance();
+            builder.RegisterType<InMemoryServiceChargeRepository>().As<IEntityForEmployeeRepository<ServiceCharge>>()
+                .SingleInstance();
+            builder.RegisterType<InMemorySalaryPaymentRepository>().As<IEntityForEmployeeRepository<SalaryPayment>>()
+                .SingleInstance();
+        }
+
+        private void RegisterServices(ContainerBuilder builder)
+        {
+            builder.RegisterType<TradeUnionChargeStrategy>().As<ITradeUnionChargeStrategy>();
+            builder.RegisterType<NoneChargeStrategy>().As<INoneChargeStrategy>();
+            builder.RegisterType<ChargeStrategyFactory>().As<IChargeStrategyFactory>();
+
+            builder.RegisterType<HourlyPayrollStrategy>().As<IHourlyPayrollStrategy>();
+            builder.RegisterType<MonthlyPayrollStrategy>().As<IMonthlyPayrollStrategy>();
+            builder.RegisterType<CommissionedPayrollStrategy>().As<ICommissionedPayrollStrategy>();
+            builder.RegisterType<PayrollStrategyFactory>().As<IPayrollStrategyFactory>();
+
+            builder.RegisterType<SalaryCalculationService>().As<ISalaryCalculationService>();
         }
     }
 }

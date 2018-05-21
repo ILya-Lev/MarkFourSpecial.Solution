@@ -1,4 +1,5 @@
 ﻿using Salary.Models;
+using System.Collections.Generic;
 
 namespace Salary.DataAccess
 {
@@ -8,6 +9,7 @@ namespace Salary.DataAccess
         Employee Delete(int employeeId);
 
         Employee Get(int employeeId);
+        ICollection<Employee> GetAll();
 
         Employee UpdateName(int employeeId, string name);
         Employee UpdateAddress(int employeeId, string address);

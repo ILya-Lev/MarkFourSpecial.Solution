@@ -1,16 +1,19 @@
-﻿using System;
-using Salary.DataAccess;
+﻿using Salary.DataAccess;
+using Salary.Models;
+using System;
 
 namespace Salary.Services.Implementation.PayrollStrategies
 {
-    public class SalaryPayrollStrategy : IPayrollStrategy
+    public class MonthlyPayrollStrategy : IMonthlyPayrollStrategy
     {
         protected readonly IEmployeeRepository _employeeRepository;
 
-        public SalaryPayrollStrategy(IEmployeeRepository employeeRepository)
+        public MonthlyPayrollStrategy(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
+
+        public virtual PaymentType PaymentType => PaymentType.Monthly;
 
         public virtual decimal GetPayroll(int employeeId, DateTime forDate)
         {

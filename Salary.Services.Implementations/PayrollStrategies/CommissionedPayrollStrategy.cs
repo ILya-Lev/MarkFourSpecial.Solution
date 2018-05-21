@@ -1,11 +1,12 @@
-﻿using System;
-using System.Linq;
-using Salary.DataAccess;
+﻿using Salary.DataAccess;
 using Salary.Models;
+using Salary.Models.Errors;
+using System;
+using System.Linq;
 
 namespace Salary.Services.Implementation.PayrollStrategies
 {
-    public class CommissionedPayrollStrategy : SalaryPayrollStrategy
+    public class CommissionedPayrollStrategy : MonthlyPayrollStrategy, ICommissionedPayrollStrategy
     {
         private readonly IEntityForEmployeeRepository<SalesReceipt> _salesReceiptRepository;
 
@@ -15,17 +16,32 @@ namespace Salary.Services.Implementation.PayrollStrategies
             _salesReceiptRepository = salesReceiptRepository;
         }
 
+        public override PaymentType PaymentType => PaymentType.Commissioned;
+
         public override decimal GetPayroll(int employeeId, DateTime forDate)
         {
             if (!IsSecondFriday(forDate))
                 return base.GetPayroll(employeeId, forDate);
 
             var employee = _employeeRepository.Get(employeeId);
-            var previousSecondFriday = GetPreviousSecondFriday(forDate);
-            var sales = _salesReceiptRepository.GetForEmployee(employeeId, previousSecondFriday, forDate);
 
-            var commission = sales.Sum(s => s.Amount) * employee.MinorRate.Value;
+            var salesInTwoWeeks = SalesInTwoWeeks(employeeId, forDate);
+            var commission = salesInTwoWeeks * employee.MinorRate.Value;
             return commission + base.GetPayroll(employeeId, forDate);
+        }
+
+        private decimal SalesInTwoWeeks(int employeeId, DateTime forDate)
+        {
+            try
+            {
+                var previousSecondFriday = GetPreviousSecondFriday(forDate);
+                var sales = _salesReceiptRepository.GetForEmployee(employeeId, previousSecondFriday, forDate);
+                return sales.Sum(s => s.Amount);
+            }
+            catch (RepositoryException exc)
+            {
+                return 0m;
+            }
         }
 
         private bool IsSecondFriday(DateTime forDate)

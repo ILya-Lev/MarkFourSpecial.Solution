@@ -46,6 +46,11 @@ namespace Salary.DataAccess.InMemory
             return _storage[employeeId];
         }
 
+        public ICollection<Employee> GetAll()
+        {
+            return _storage.Values.OrderBy(employee => employee.Id).ToArray();
+        }
+
         public Employee UpdateName(int employeeId, string name)
         {
             var employee = Get(employeeId);
@@ -79,7 +84,7 @@ namespace Salary.DataAccess.InMemory
         {
             var employee = Get(employeeId);
 
-            employee.PaymentType = PaymentType.Salary;
+            employee.PaymentType = PaymentType.Monthly;
             employee.MajorRate = salary;
             employee.MinorRate = null;
 

@@ -8,7 +8,7 @@ namespace Salary.Services.Implementation.Factories
         private readonly IChargeStrategy _none;
         private readonly IEmployeeRepository _employeeRepository;
 
-        public ChargeStrategyFactory(IChargeStrategy tradeUnion, IChargeStrategy none, IEmployeeRepository employeeRepository)
+        public ChargeStrategyFactory(ITradeUnionChargeStrategy tradeUnion, INoneChargeStrategy none, IEmployeeRepository employeeRepository)
         {
             _tradeUnion = tradeUnion;
             _none = none;

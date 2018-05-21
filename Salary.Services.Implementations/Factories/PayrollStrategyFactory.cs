@@ -10,13 +10,13 @@ namespace Salary.Services.Implementation.Factories
         private readonly Dictionary<PaymentType, IPayrollStrategy> _supportedStrategies;
         private readonly IEmployeeRepository _employeeRepository;
 
-        public PayrollStrategyFactory(IPayrollStrategy hourly, IPayrollStrategy salary, IPayrollStrategy commission, IEmployeeRepository employeeRepository)
+        public PayrollStrategyFactory(IHourlyPayrollStrategy hourly, IMonthlyPayrollStrategy monthly, ICommissionedPayrollStrategy commission, IEmployeeRepository employeeRepository)
         {
             _supportedStrategies = new Dictionary<PaymentType, IPayrollStrategy>
             {
-                [PaymentType.Hourly] = hourly,
-                [PaymentType.Salary] = salary,
-                [PaymentType.Commissioned] = commission
+                [hourly.PaymentType] = hourly,
+                [monthly.PaymentType] = monthly,
+                [commission.PaymentType] = commission
             };
             _employeeRepository = employeeRepository;
         }

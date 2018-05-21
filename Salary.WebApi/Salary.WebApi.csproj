@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Salary.DataAccess.InMemory\Salary.DataAccess.InMemory.csproj" />
+    <ProjectReference Include="..\Salary.Services.Implementations\Salary.Services.Implementation.csproj" />
+    <ProjectReference Include="..\Salary.Services\Salary.Services.csproj" />
   </ItemGroup>
 
 </Project>

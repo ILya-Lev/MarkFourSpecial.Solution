@@ -3,7 +3,7 @@
     public enum PaymentType
     {
         Hourly,
-        Salary,
+        Monthly,
         Commissioned
     }
 }

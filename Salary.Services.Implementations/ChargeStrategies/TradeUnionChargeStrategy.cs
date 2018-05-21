@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Salary.Services.Implementation.ChargeStrategies
 {
-    public class TradeUnionChargeStrategy : IChargeStrategy
+    public class TradeUnionChargeStrategy : ITradeUnionChargeStrategy
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IEntityForEmployeeRepository<ServiceCharge> _serviceChargeRepository;

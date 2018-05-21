@@ -1,11 +1,12 @@
-﻿using System;
-using System.Linq;
-using Salary.DataAccess;
+﻿using Salary.DataAccess;
 using Salary.Models;
+using Salary.Models.Errors;
+using System;
+using System.Linq;
 
 namespace Salary.Services.Implementation.PayrollStrategies
 {
-    public class HourlyPayrollStrategy : IPayrollStrategy
+    public class HourlyPayrollStrategy : IHourlyPayrollStrategy
     {
         private const int StandardHours = 8;
         private const decimal OvertimeFactor = 1.5m;
@@ -20,6 +21,8 @@ namespace Salary.Services.Implementation.PayrollStrategies
             _timeCardRepository = timeCardRepository;
         }
 
+        public PaymentType PaymentType => PaymentType.Hourly;
+
         public decimal GetPayroll(int employeeId, DateTime forDate)
         {
             if (forDate.DayOfWeek != DayOfWeek.Friday)
@@ -29,9 +32,22 @@ namespace Salary.Services.Implementation.PayrollStrategies
 
             var employee = _employeeRepository.Get(employeeId);
 
-            var timeCards = _timeCardRepository.GetForEmployee(employeeId, forDate.Subtract(TimeSpan.FromDays(7)), forDate);
+            var workedHoursInWeek = WorkedHoursInWeek(employeeId, forDate);
 
-            return timeCards.Select(tc => EffectiveHours(tc.Hours)).Sum() * employee.MajorRate;
+            return workedHoursInWeek * employee.MajorRate;
+        }
+
+        private decimal WorkedHoursInWeek(int employeeId, DateTime forDate)
+        {
+            try
+            {
+                var timeCards = _timeCardRepository.GetForEmployee(employeeId, forDate.Subtract(TimeSpan.FromDays(7)), forDate);
+                return timeCards.Select(tc => EffectiveHours(tc.Hours)).Sum();
+            }
+            catch (RepositoryException exc)
+            {
+                return 0m;
+            }
         }
 
         private static decimal EffectiveHours(float hours)

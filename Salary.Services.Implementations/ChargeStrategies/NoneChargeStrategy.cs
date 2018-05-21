@@ -4,7 +4,7 @@ using System;
 
 namespace Salary.Services.Implementation.ChargeStrategies
 {
-    public class NoneChargeStrategy : IChargeStrategy
+    public class NoneChargeStrategy : INoneChargeStrategy
     {
         private readonly IEmployeeRepository _employeeRepository;
 

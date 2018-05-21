@@ -6,4 +6,7 @@ namespace Salary.Services
     {
         decimal GetCharge(int employeeId, DateTime forDate);
     }
+
+    public interface ITradeUnionChargeStrategy : IChargeStrategy { }
+    public interface INoneChargeStrategy : IChargeStrategy { }
 }

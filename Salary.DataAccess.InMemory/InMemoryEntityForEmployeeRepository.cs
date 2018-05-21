@@ -13,13 +13,16 @@ namespace Salary.DataAccess.InMemory
 
         public int Create<T>(T inMemoryInstance, Func<T, EntityForEmployee> cloner) where T : EntityForEmployee
         {
-            var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
+            lock (_storage)
+            {
+                var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
 
-            var clone = cloner(inMemoryInstance);
-            clone.Id = id;
-            _storage.Add(id, clone);
+                var clone = cloner(inMemoryInstance);
+                clone.Id = id;
+                _storage.Add(id, clone);
 
-            return id;
+                return id;
+            }
         }
 
         public EntityForEmployee Get(int id)
