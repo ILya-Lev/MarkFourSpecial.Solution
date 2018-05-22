@@ -54,7 +54,7 @@ namespace Salary.WebApi.Controllers
         [HttpPut("UpdateSalaried/{id}")]
         public IActionResult PutSalaried(int id, [FromBody]decimal amount)
         {
-            return Ok(_employeeRepository.UpdateSalaried(id, amount));
+            return Ok(_employeeRepository.UpdateMonthly(id, amount));
         }
 
         [HttpPut("UpdateCommissioned/{id}")]

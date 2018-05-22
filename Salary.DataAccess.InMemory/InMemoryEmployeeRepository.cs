@@ -10,18 +10,40 @@ namespace Salary.DataAccess.InMemory
     {
         private readonly Dictionary<int, Employee> _storage = new Dictionary<int, Employee>();
 
-        public int Create(Employee inMemoryInstance)
+        public int Create(Employee employee)
         {
-            if (inMemoryInstance.Id != 0 && _storage.ContainsKey(inMemoryInstance.Id))
+            if (employee.Id != 0 && _storage.ContainsKey(employee.Id))
             {
-                throw new RepositoryException($"Employee with id '{inMemoryInstance.Id}' already exists, cannot re-create.")
+                throw new RepositoryException($"Employee with id '{employee.Id}' already exists, cannot re-create.")
                 {
                     StatusCode = HttpStatusCode.Conflict
                 };
             }
 
+            if (employee.MajorRate == default(decimal))
+            {
+                throw new ValidationException("Major rate should be always specified!");
+            }
+            if (employee.PaymentType != PaymentType.Commissioned && employee.MinorRate.HasValue)
+            {
+                throw new ValidationException($"Employee with payment type '{employee.PaymentType}' should not have minor rate '{employee.MinorRate}'.");
+            }
+            if (employee.PaymentType == PaymentType.Commissioned && !employee.MinorRate.HasValue)
+            {
+                throw new ValidationException($"Employee with payment type '{employee.PaymentType}' should have minor rate.");
+            }
+
             var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
-            var storedEmployee = new Employee(inMemoryInstance) { Id = id };
+            var storedEmployee = new Employee
+            {
+                Id = id,
+                Name = employee.Name,
+                Address = employee.Address,
+                PaymentType = employee.PaymentType,
+                MajorRate = employee.MajorRate,
+                MinorRate = employee.MinorRate,
+                TradeUnionCharge = employee.TradeUnionCharge
+            };
             _storage.Add(id, storedEmployee);
             return id;
         }
@@ -54,7 +76,10 @@ namespace Salary.DataAccess.InMemory
         public Employee UpdateName(int employeeId, string name)
         {
             var employee = Get(employeeId);
-
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ValidationException("Employee name should be set");
+            }
             employee.Name = name;
 
             return employee;
@@ -80,7 +105,7 @@ namespace Salary.DataAccess.InMemory
             return employee;
         }
 
-        public Employee UpdateSalaried(int employeeId, decimal salary)
+        public Employee UpdateMonthly(int employeeId, decimal salary)
         {
             var employee = Get(employeeId);
 

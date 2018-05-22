@@ -26,6 +26,10 @@ namespace Salary.WebApi.Middleware
             {
                 await HandleException(context, exc.Message, (int)exc.StatusCode);
             }
+            catch (ValidationException exc)
+            {
+                await HandleException(context, exc.Message, (int)exc.StatusCode);
+            }
             catch (StrategyException exc)
             {
                 await HandleException(context, exc.Message, (int)HttpStatusCode.InternalServerError);
