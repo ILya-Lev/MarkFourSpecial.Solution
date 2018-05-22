@@ -9,10 +9,10 @@ using Xunit;
 
 namespace Salary.DataAccess.InMemory.Tests
 {
-    public class InMemoryEmployeeRepositoryTests
+    public class EmployeeRepositoryTests
     {
         private readonly InMemoryEmployeeRepository _repository;
-        public InMemoryEmployeeRepositoryTests()
+        public EmployeeRepositoryTests()
         {
             _repository = new InMemoryEmployeeRepository();
         }
@@ -28,6 +28,13 @@ namespace Salary.DataAccess.InMemory.Tests
             creation.Should()
                 .Throw<RepositoryException>("in memory instance already has an id => is considered as stored")
                 .Where(exc => exc.StatusCode == HttpStatusCode.Conflict);
+        }
+
+        [Fact]
+        public void Create_NullInstance_ThrowsException()
+        {
+            Action creation = () => _repository.Create(null);
+            creation.Should().Throw<ArgumentNullException>().Where(exc => exc.ParamName == "employee");
         }
 
         [Fact]

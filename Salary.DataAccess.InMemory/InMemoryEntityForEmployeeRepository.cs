@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Salary.DataAccess.InMemory.Tests")]
 
 namespace Salary.DataAccess.InMemory
 {
@@ -13,6 +16,8 @@ namespace Salary.DataAccess.InMemory
 
         public int Create<T>(T inMemoryInstance, Func<T, EntityForEmployee> cloner) where T : EntityForEmployee
         {
+            if (inMemoryInstance == null) throw new ArgumentNullException(nameof(inMemoryInstance));
+            if (cloner == null) throw new ArgumentNullException(nameof(cloner));
             lock (_storage)
             {
                 var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
@@ -59,12 +64,13 @@ namespace Salary.DataAccess.InMemory
         private ICollection<EntityForEmployee> GetBy(int employeeId, Func<EntityForEmployee, bool> predicate, string suffix)
         {
             var timeCards = _storage.Values.Where(val => val.EmployeeId == employeeId && predicate(val)).ToList();
-            if (timeCards.Count == 0)
-                throw new RepositoryException($"Cannot find any {typeof(EntityForEmployee).Name} with employee id '{employeeId}'{suffix}")
-                {
-                    StatusCode = HttpStatusCode.NotFound
-                };
-            return timeCards;
+            if (timeCards.Count != 0)
+                return timeCards;
+
+            throw new RepositoryException($"Cannot find any {typeof(EntityForEmployee).Name} with employee id '{employeeId}'{suffix}")
+            {
+                StatusCode = HttpStatusCode.NotFound
+            };
         }
     }
 }

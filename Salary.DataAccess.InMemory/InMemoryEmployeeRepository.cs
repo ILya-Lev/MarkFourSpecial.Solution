@@ -1,5 +1,6 @@
 ﻿using Salary.Models;
 using Salary.Models.Errors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,6 +13,10 @@ namespace Salary.DataAccess.InMemory
 
         public int Create(Employee employee)
         {
+            if (employee == null)
+            {
+                throw new ArgumentNullException(nameof(employee));
+            }
             if (employee.Id != 0 && _storage.ContainsKey(employee.Id))
             {
                 throw new RepositoryException($"Employee with id '{employee.Id}' already exists, cannot re-create.")
