@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Salary.DataAccess.InMemory\Salary.DataAccess.InMemory.csproj" />
+    <ProjectReference Include="..\Salary.WebApi\Salary.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
