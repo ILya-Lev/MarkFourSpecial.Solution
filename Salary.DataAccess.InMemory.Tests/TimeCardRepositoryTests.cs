@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Salary.DataAccess.Intermediate;
 using Salary.Models;
+using Salary.Models.Errors;
 using System;
 using Xunit;
 
@@ -32,6 +33,21 @@ namespace Salary.DataAccess.InMemory.Tests
             storedReceipt.Date.Should().Be(timeCard.Date);
             storedReceipt.EmployeeId.Should().Be(timeCard.EmployeeId);
             storedReceipt.Id.Should().Be(id);
+        }
+
+        [InlineData(0)]
+        [InlineData(0.5f)]
+        [InlineData(-1)]
+        [InlineData(24.1f)]
+        [InlineData(30)]
+        [Theory]
+        public void Create_InvalidHours_ThrowsException(float hours)
+        {
+            var timeCard = new TimeCard(1973) { Date = DateTime.Now };
+
+            Action creation = () => timeCard.Hours = hours;
+
+            creation.Should().Throw<ValidationException>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Salary.Models.Errors;
 
 namespace Salary.Models
 {
@@ -13,7 +14,7 @@ namespace Salary.Models
             {
                 if (value < 1 || value > 24)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(Hours),
+                    throw new ValidationException(
                           $"Time card hours cannot exceed 24 hours and be less than 1 hour. Actual value is {value}");
                 }
                 _hours = value;
