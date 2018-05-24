@@ -1,4 +1,5 @@
-﻿using Salary.Models;
+﻿using Salary.DataAccess.Intermediate;
+using Salary.Models;
 using Salary.Models.Errors;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,13 @@ namespace Salary.DataAccess.InMemory
 {
     public class InMemoryEmployeeRepository : IEmployeeRepository
     {
+        private readonly IEntityForEmployeeStorage _relatedEntityStorage;
         private readonly Dictionary<int, Employee> _storage = new Dictionary<int, Employee>();
+
+        public InMemoryEmployeeRepository(IEntityForEmployeeStorage relatedEntityStorage)
+        {
+            _relatedEntityStorage = relatedEntityStorage;
+        }
 
         public int Create(Employee employee)
         {
@@ -57,7 +64,25 @@ namespace Salary.DataAccess.InMemory
         {
             var employee = Get(employeeId);
             _storage.Remove(employeeId);
+
+            DeleteRelatedEntities(employeeId);
+
             return employee;
+        }
+
+        private void DeleteRelatedEntities(int employeeId)
+        {
+            try
+            {
+                _relatedEntityStorage.GetForEmployee(employeeId)
+                    .Select(entity => entity.Id).ToList()
+                    .Select(_relatedEntityStorage.Delete<EntityForEmployee>).ToList();
+            }
+            catch (RepositoryException exc)
+            {
+                if (exc.StatusCode != HttpStatusCode.NotFound)
+                    throw;
+            }
         }
 
         public Employee Get(int employeeId)

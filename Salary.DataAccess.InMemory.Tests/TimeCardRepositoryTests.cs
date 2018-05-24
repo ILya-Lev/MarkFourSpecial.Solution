@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using System;
 using Xunit;
@@ -7,21 +8,20 @@ namespace Salary.DataAccess.InMemory.Tests
 {
     public class TimeCardRepositoryTests
     {
-        private readonly InMemoryTimeCardRepository _repository;
+        private readonly TimeCardRepository _repository;
 
         public TimeCardRepositoryTests()
         {
-            _repository = new InMemoryTimeCardRepository();
+            _repository = new TimeCardRepository(new InMemoryEntityForEmployeeStorage());
         }
 
         [Fact]
         public void Create_CopiesAllProperties()
         {
-            var timeCard = new TimeCard
+            var timeCard = new TimeCard(1973)
             {
                 Hours = 8.2f,
                 Date = DateTime.Now,
-                EmployeeId = 1972
             };
 
             var id = _repository.Create(timeCard);

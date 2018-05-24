@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using System;
 using Xunit;
@@ -7,21 +8,20 @@ namespace Salary.DataAccess.InMemory.Tests
 {
     public class ServiceChargeRepositoryTests
     {
-        private readonly InMemoryServiceChargeRepository _repository;
+        private readonly ServiceChargeRepository _repository;
 
         public ServiceChargeRepositoryTests()
         {
-            _repository = new InMemoryServiceChargeRepository();
+            _repository = new ServiceChargeRepository(new InMemoryEntityForEmployeeStorage());
         }
 
         [Fact]
         public void Create_CopiesAllProperties()
         {
-            var serviceCharge = new ServiceCharge
+            var serviceCharge = new ServiceCharge(1972)
             {
                 Amount = 11m,
                 Date = DateTime.Now,
-                EmployeeId = 1972
             };
 
             var id = _repository.Create(serviceCharge);

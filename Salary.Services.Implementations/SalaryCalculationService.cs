@@ -33,11 +33,10 @@ namespace Salary.Services.Implementation
             var charge = chargeStrategy.GetCharge(employeeId, forDate);
 
             var payment = payroll - charge;
-            _salaryPaymentRepository.Create(new SalaryPayment
+            _salaryPaymentRepository.Create(new SalaryPayment(employeeId)
             {
                 Amount = payment,
                 Date = DateTime.Today,
-                EmployeeId = employeeId
             });
             return payment;
         }

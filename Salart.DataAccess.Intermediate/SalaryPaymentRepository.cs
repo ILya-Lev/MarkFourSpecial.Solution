@@ -3,19 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Salary.DataAccess.InMemory
+namespace Salary.DataAccess.Intermediate
 {
-    public class InMemorySalaryPaymentRepository : IEntityForEmployeeRepository<SalaryPayment>
+    public class SalaryPaymentRepository : IEntityForEmployeeRepository<SalaryPayment>
     {
-        private readonly InMemoryEntityForEmployeeRepository _repository = new InMemoryEntityForEmployeeRepository();
+        private readonly IEntityForEmployeeStorage _repository;
+
+        public SalaryPaymentRepository(IEntityForEmployeeStorage repository)
+        {
+            _repository = repository;
+        }
 
         public int Create(SalaryPayment inMemoryPayment)
         {
-            Func<SalaryPayment, EntityForEmployee> cloner = sp => new SalaryPayment
+            Func<SalaryPayment, EntityForEmployee> cloner = sp => new SalaryPayment(sp.EmployeeId)
             {
                 Amount = sp.Amount,
                 Date = sp.Date,
-                EmployeeId = sp.EmployeeId
             };
             return _repository.Create(inMemoryPayment, cloner);
         }
@@ -27,7 +31,7 @@ namespace Salary.DataAccess.InMemory
 
         public ICollection<SalaryPayment> GetForEmployee(int employeeId, DateTime? since, DateTime? until)
         {
-            return _repository.GetForEmployee(employeeId, since, until).Cast<SalaryPayment>().ToList();
+            return _repository.GetForEmployee(employeeId, since, until).OfType<SalaryPayment>().ToList();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using System;
 using System.Linq;
@@ -9,21 +10,20 @@ namespace Salary.DataAccess.InMemory.Tests
 {
     public class SalaryPaymentRepositoryTests
     {
-        private readonly InMemorySalaryPaymentRepository _repository;
+        private readonly SalaryPaymentRepository _repository;
 
         public SalaryPaymentRepositoryTests()
         {
-            _repository = new InMemorySalaryPaymentRepository();
+            _repository = new SalaryPaymentRepository(new InMemoryEntityForEmployeeStorage());
         }
 
         [Fact]
         public void Create_CopiesAllProperties()
         {
-            var salaryPayment = new SalaryPayment
+            var salaryPayment = new SalaryPayment(11)
             {
                 Amount = 10m,
                 Date = DateTime.Now,
-                EmployeeId = 11
             };
             var id = _repository.Create(salaryPayment);
 
@@ -38,11 +38,10 @@ namespace Salary.DataAccess.InMemory.Tests
         [Fact]
         public void Create_FromManyThreads_GeneratesUniqueIds()
         {
-            var salaryPayment = new SalaryPayment
+            var salaryPayment = new SalaryPayment(11)
             {
                 Amount = 10m,
                 Date = DateTime.Now,
-                EmployeeId = 11
             };
             var itemsCount = 1000;
 

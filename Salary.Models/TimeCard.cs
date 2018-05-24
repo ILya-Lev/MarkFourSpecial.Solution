@@ -19,5 +19,7 @@ namespace Salary.Models
                 _hours = value;
             }
         }
+
+        public TimeCard(int employeeId) : base(employeeId) { }
     }
 }

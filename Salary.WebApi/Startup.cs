@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Salary.DataAccess;
 using Salary.DataAccess.InMemory;
+using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using Salary.Services;
 using Salary.Services.Implementation;
@@ -53,14 +54,15 @@ namespace Salary.WebApi
 
         private static void RegisterRepositories(ContainerBuilder builder)
         {
-            builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>().SingleInstance();
-            builder.RegisterType<InMemoryTimeCardRepository>().As<IEntityForEmployeeRepository<TimeCard>>().SingleInstance();
-            builder.RegisterType<InMemorySalesReceiptRepository>().As<IEntityForEmployeeRepository<SalesReceipt>>()
+            builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>()
                 .SingleInstance();
-            builder.RegisterType<InMemoryServiceChargeRepository>().As<IEntityForEmployeeRepository<ServiceCharge>>()
+
+            builder.RegisterType<InMemoryEntityForEmployeeStorage>().As<IEntityForEmployeeStorage>()
                 .SingleInstance();
-            builder.RegisterType<InMemorySalaryPaymentRepository>().As<IEntityForEmployeeRepository<SalaryPayment>>()
-                .SingleInstance();
+            builder.RegisterType<TimeCardRepository>().As<IEntityForEmployeeRepository<TimeCard>>();
+            builder.RegisterType<SalesReceiptRepository>().As<IEntityForEmployeeRepository<SalesReceipt>>();
+            builder.RegisterType<ServiceChargeRepository>().As<IEntityForEmployeeRepository<ServiceCharge>>();
+            builder.RegisterType<SalaryPaymentRepository>().As<IEntityForEmployeeRepository<SalaryPayment>>();
         }
 
         private void RegisterServices(ContainerBuilder builder)

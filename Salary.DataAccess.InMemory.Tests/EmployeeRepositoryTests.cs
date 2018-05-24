@@ -14,7 +14,7 @@ namespace Salary.DataAccess.InMemory.Tests
         private readonly InMemoryEmployeeRepository _repository;
         public EmployeeRepositoryTests()
         {
-            _repository = new InMemoryEmployeeRepository();
+            _repository = new InMemoryEmployeeRepository(new InMemoryEntityForEmployeeStorage());
         }
 
         [Fact]

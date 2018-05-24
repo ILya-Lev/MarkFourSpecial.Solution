@@ -1,16 +1,16 @@
-﻿using Salary.Models;
+﻿using Salary.DataAccess.Intermediate;
+using Salary.Models;
 using Salary.Models.Errors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Salary.DataAccess.InMemory.Tests")]
+//[assembly: InternalsVisibleTo("Salary.DataAccess.InMemory.Tests")]
 
 namespace Salary.DataAccess.InMemory
 {
-    internal class InMemoryEntityForEmployeeRepository
+    public class InMemoryEntityForEmployeeStorage : IEntityForEmployeeStorage
     {
         private readonly Dictionary<int, EntityForEmployee> _storage = new Dictionary<int, EntityForEmployee>();
 
@@ -27,6 +27,21 @@ namespace Salary.DataAccess.InMemory
                 _storage.Add(id, clone);
 
                 return id;
+            }
+        }
+
+        public T Delete<T>(int id) where T : EntityForEmployee
+        {
+            lock (_storage)
+            {
+                if (_storage.ContainsKey(id))
+                {
+                    var instance = _storage[id];
+                    _storage.Remove(id);
+                    return instance as T;
+                }
+
+                return default(T);
             }
         }
 
