@@ -1,9 +1,10 @@
 ﻿using Salary.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Salary.DataAccess
 {
-    public interface IEmployeeRepository
+    public interface IEmployeeRepository : IDisposable
     {
         int Create(Employee employee);
         Employee Delete(int employeeId);

@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess.InMemory.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess.Implementation", "Salart.DataAccess.Intermediate\Salary.DataAccess.Implementation.csproj", "{ECA831AF-5CE4-4162-B8CE-EA4CBF6C7789}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.DataAccess.OnDisk", "Salary.DataAccess.OnDisk\Salary.DataAccess.OnDisk.csproj", "{97EED477-2C76-4F24-9D7A-190606626F66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{ECA831AF-5CE4-4162-B8CE-EA4CBF6C7789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA831AF-5CE4-4162-B8CE-EA4CBF6C7789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECA831AF-5CE4-4162-B8CE-EA4CBF6C7789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97EED477-2C76-4F24-9D7A-190606626F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97EED477-2C76-4F24-9D7A-190606626F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97EED477-2C76-4F24-9D7A-190606626F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97EED477-2C76-4F24-9D7A-190606626F66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

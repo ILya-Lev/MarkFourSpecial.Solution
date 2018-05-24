@@ -1,0 +1,3 @@
+{"Id":1,"Name":"Jonh Smith","Address":"Sumskaya 1, Kharkov, Ukraine","PaymentType":1,"MajorRate":3200.0,"MinorRate":null,"TradeUnionCharge":null}
+{"Id":2,"Name":"Ilon Mask","Address":"Briton Beach 11, California, USA","PaymentType":0,"MajorRate":35.0,"MinorRate":null,"TradeUnionCharge":null}
+{"Id":3,"Name":"Aaln Prost","Address":"Paris, France","PaymentType":2,"MajorRate":4500.0,"MinorRate":3.0,"TradeUnionCharge":null}

@@ -2,7 +2,7 @@
 
 namespace Salary.Models
 {
-    public class EntityForEmployee
+    public class EntityForEmployee : IEntityWithId
     {
         public EntityForEmployee(int employeeId)
         {

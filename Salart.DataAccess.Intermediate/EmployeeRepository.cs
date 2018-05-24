@@ -18,6 +18,11 @@ namespace Salary.DataAccess.Implementation
             _storage = storage;
         }
 
+        public void Dispose()
+        {
+            _storage.Dispose();
+        }
+
         public int Create(Employee employee)
         {
             if (employee == null)

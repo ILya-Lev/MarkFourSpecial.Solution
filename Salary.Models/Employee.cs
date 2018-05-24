@@ -1,6 +1,6 @@
 ﻿namespace Salary.Models
 {
-    public class Employee
+    public class Employee : IEntityWithId
     {
         public int Id { get; set; }
         public string Name { get; set; }
