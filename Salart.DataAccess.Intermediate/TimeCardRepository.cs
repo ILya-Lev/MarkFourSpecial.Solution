@@ -1,15 +1,15 @@
-﻿using Salary.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Salary.Models;
 
-namespace Salary.DataAccess.Intermediate
+namespace Salary.DataAccess.Implementation
 {
     public class TimeCardRepository : IEntityForEmployeeRepository<TimeCard>
     {
-        private readonly IEntityForEmployeeStorage _repository;
+        private readonly IEntityForEmployeeBaseRepository _repository;
 
-        public TimeCardRepository(IEntityForEmployeeStorage repository)
+        public TimeCardRepository(IEntityForEmployeeBaseRepository repository)
         {
             _repository = repository;
         }

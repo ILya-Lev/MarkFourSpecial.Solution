@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Salary.DataAccess.Intermediate
+namespace Salary.DataAccess.Implementation
 {
     public class SalaryPaymentRepository : IEntityForEmployeeRepository<SalaryPayment>
     {
-        private readonly IEntityForEmployeeStorage _repository;
+        private readonly IEntityForEmployeeBaseRepository _repository;
 
-        public SalaryPaymentRepository(IEntityForEmployeeStorage repository)
+        public SalaryPaymentRepository(IEntityForEmployeeBaseRepository repository)
         {
             _repository = repository;
         }

@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Salart.DataAccess.Intermediate\Salary.DataAccess.Intermediate.csproj" />
-    <ProjectReference Include="..\Salary.DataAccess\Salary.DataAccess.csproj" />
-    <ProjectReference Include="..\Salary.Models\Salary.Models.csproj" />
+    <ProjectReference Include="..\Salart.DataAccess.Intermediate\Salary.DataAccess.Implementation.csproj" />
   </ItemGroup>
 
 </Project>

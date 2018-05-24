@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SalaryTests", "SalaryTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess.InMemory.Tests", "Salary.DataAccess.InMemory.Tests\Salary.DataAccess.InMemory.Tests.csproj", "{AECFEF51-4098-437A-A20C-D90E04BDF126}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salary.DataAccess.Intermediate", "Salart.DataAccess.Intermediate\Salary.DataAccess.Intermediate.csproj", "{ECA831AF-5CE4-4162-B8CE-EA4CBF6C7789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.DataAccess.Implementation", "Salart.DataAccess.Intermediate\Salary.DataAccess.Implementation.csproj", "{ECA831AF-5CE4-4162-B8CE-EA4CBF6C7789}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

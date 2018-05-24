@@ -1,15 +1,15 @@
-﻿using Salary.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Salary.Models;
 
-namespace Salary.DataAccess.Intermediate
+namespace Salary.DataAccess.Implementation
 {
     public class SalesReceiptRepository : IEntityForEmployeeRepository<SalesReceipt>
     {
-        private readonly IEntityForEmployeeStorage _repository;
+        private readonly IEntityForEmployeeBaseRepository _repository;
 
-        public SalesReceiptRepository(IEntityForEmployeeStorage repository)
+        public SalesReceiptRepository(IEntityForEmployeeBaseRepository repository)
         {
             _repository = repository;
         }

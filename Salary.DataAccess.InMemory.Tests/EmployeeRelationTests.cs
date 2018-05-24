@@ -1,25 +1,25 @@
 ﻿using FluentAssertions;
-using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using Salary.Models.Errors;
 using System.Net;
+using Salary.DataAccess.Implementation;
 using Xunit;
 
 namespace Salary.DataAccess.InMemory.Tests
 {
     public class EmployeeRelationTests
     {
-        private readonly InMemoryEntityForEmployeeStorage _storage;
-        private readonly InMemoryEmployeeRepository _employeeRepository;
+        private readonly EntityForEmployeeBaseRepository _baseRepository;
+        private readonly EmployeeRepository _employeeRepository;
         private readonly TimeCardRepository _timeCardRepository;
         private readonly SalesReceiptRepository _salesReceiptRepository;
 
         public EmployeeRelationTests()
         {
-            _storage = new InMemoryEntityForEmployeeStorage();
-            _timeCardRepository = new TimeCardRepository(_storage);
-            _salesReceiptRepository = new SalesReceiptRepository(_storage);
-            _employeeRepository = new InMemoryEmployeeRepository(_storage);
+            _baseRepository = new EntityForEmployeeBaseRepository(new InMemoryStorage<EntityForEmployee>());
+            _timeCardRepository = new TimeCardRepository(_baseRepository);
+            _salesReceiptRepository = new SalesReceiptRepository(_baseRepository);
+            _employeeRepository = new EmployeeRepository(_baseRepository, new InMemoryStorage<Employee>());
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Salary.DataAccess.InMemory.Tests
         {
             try
             {
-                _storage.Get(tcId);
+                _baseRepository.Get(tcId);
             }
             catch (RepositoryException exc)
             {

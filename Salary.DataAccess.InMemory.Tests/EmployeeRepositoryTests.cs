@@ -5,16 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Salary.DataAccess.Implementation;
 using Xunit;
 
 namespace Salary.DataAccess.InMemory.Tests
 {
     public class EmployeeRepositoryTests
     {
-        private readonly InMemoryEmployeeRepository _repository;
+        private readonly EmployeeRepository _repository;
         public EmployeeRepositoryTests()
         {
-            _repository = new InMemoryEmployeeRepository(new InMemoryEntityForEmployeeStorage());
+            _repository = new EmployeeRepository(new EntityForEmployeeBaseRepository(new InMemoryStorage<EntityForEmployee>()), new InMemoryStorage<Employee>());
         }
 
         [Fact]

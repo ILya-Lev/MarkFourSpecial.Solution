@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Salary.DataAccess.Intermediate
+namespace Salary.DataAccess.Implementation
 {
-    public interface IEntityForEmployeeStorage
+    public interface IEntityForEmployeeBaseRepository
     {
         int Create<T>(T inMemoryInstance, Func<T, EntityForEmployee> cloner) where T : EntityForEmployee;
         T Delete<T>(int id) where T : EntityForEmployee;

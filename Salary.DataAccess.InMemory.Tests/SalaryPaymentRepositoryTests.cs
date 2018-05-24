@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Salary.DataAccess.Implementation;
 using Xunit;
 
 namespace Salary.DataAccess.InMemory.Tests
@@ -14,7 +14,7 @@ namespace Salary.DataAccess.InMemory.Tests
 
         public SalaryPaymentRepositoryTests()
         {
-            _repository = new SalaryPaymentRepository(new InMemoryEntityForEmployeeStorage());
+            _repository = new SalaryPaymentRepository(new EntityForEmployeeBaseRepository(new InMemoryStorage<EntityForEmployee>()));
         }
 
         [Fact]

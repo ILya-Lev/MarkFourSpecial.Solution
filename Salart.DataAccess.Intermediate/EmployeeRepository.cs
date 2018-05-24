@@ -1,21 +1,21 @@
-﻿using Salary.DataAccess.Intermediate;
-using Salary.Models;
+﻿using Salary.Models;
 using Salary.Models.Errors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace Salary.DataAccess.InMemory
+namespace Salary.DataAccess.Implementation
 {
-    public class InMemoryEmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly IEntityForEmployeeStorage _relatedEntityStorage;
-        private readonly Dictionary<int, Employee> _storage = new Dictionary<int, Employee>();
+        private readonly IEntityForEmployeeBaseRepository _relatedEntityBaseRepository;
+        private readonly IStorage<Employee> _storage;
 
-        public InMemoryEmployeeRepository(IEntityForEmployeeStorage relatedEntityStorage)
+        public EmployeeRepository(IEntityForEmployeeBaseRepository relatedEntityBaseRepository, IStorage<Employee> storage)
         {
-            _relatedEntityStorage = relatedEntityStorage;
+            _relatedEntityBaseRepository = relatedEntityBaseRepository;
+            _storage = storage;
         }
 
         public int Create(Employee employee)
@@ -24,7 +24,7 @@ namespace Salary.DataAccess.InMemory
             {
                 throw new ArgumentNullException(nameof(employee));
             }
-            if (employee.Id != 0 && _storage.ContainsKey(employee.Id))
+            if (employee.Id != 0 && _storage.Entities.ContainsKey(employee.Id))
             {
                 throw new RepositoryException($"Employee with id '{employee.Id}' already exists, cannot re-create.")
                 {
@@ -45,7 +45,7 @@ namespace Salary.DataAccess.InMemory
                 throw new ValidationException($"Employee with payment type '{employee.PaymentType}' should have minor rate.");
             }
 
-            var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
+            var id = _storage.Entities.Count == 0 ? 1 : (_storage.Entities.Keys.Max() + 1);
             var storedEmployee = new Employee
             {
                 Id = id,
@@ -56,14 +56,14 @@ namespace Salary.DataAccess.InMemory
                 MinorRate = employee.MinorRate,
                 TradeUnionCharge = employee.TradeUnionCharge
             };
-            _storage.Add(id, storedEmployee);
+            _storage.Entities.Add(id, storedEmployee);
             return id;
         }
 
         public Employee Delete(int employeeId)
         {
             var employee = Get(employeeId);
-            _storage.Remove(employeeId);
+            _storage.Entities.Remove(employeeId);
 
             DeleteRelatedEntities(employeeId);
 
@@ -74,9 +74,9 @@ namespace Salary.DataAccess.InMemory
         {
             try
             {
-                _relatedEntityStorage.GetForEmployee(employeeId)
+                _relatedEntityBaseRepository.GetForEmployee(employeeId)
                     .Select(entity => entity.Id).ToList()
-                    .Select(_relatedEntityStorage.Delete<EntityForEmployee>).ToList();
+                    .Select(_relatedEntityBaseRepository.Delete<EntityForEmployee>).ToList();
             }
             catch (RepositoryException exc)
             {
@@ -87,7 +87,7 @@ namespace Salary.DataAccess.InMemory
 
         public Employee Get(int employeeId)
         {
-            if (!_storage.ContainsKey(employeeId))
+            if (!_storage.Entities.ContainsKey(employeeId))
             {
                 throw new RepositoryException($"Employee with id '{employeeId}' does not exist.")
                 {
@@ -95,12 +95,12 @@ namespace Salary.DataAccess.InMemory
                 };
             }
 
-            return _storage[employeeId];
+            return _storage.Entities[employeeId];
         }
 
         public ICollection<Employee> GetAll()
         {
-            return _storage.Values.OrderBy(employee => employee.Id).ToArray();
+            return _storage.Entities.Values.OrderBy(employee => employee.Id).ToArray();
         }
 
         public Employee UpdateName(int employeeId, string name)

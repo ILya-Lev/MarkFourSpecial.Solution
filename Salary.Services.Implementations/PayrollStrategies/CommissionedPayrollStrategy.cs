@@ -26,7 +26,7 @@ namespace Salary.Services.Implementation.PayrollStrategies
             var employee = _employeeRepository.Get(employeeId);
 
             var salesInTwoWeeks = SalesInTwoWeeks(employeeId, forDate);
-            var commission = salesInTwoWeeks * employee.MinorRate.Value;
+            var commission = salesInTwoWeeks * employee.MinorRate.Value / 100;
             return commission + base.GetPayroll(employeeId, forDate);
         }
 

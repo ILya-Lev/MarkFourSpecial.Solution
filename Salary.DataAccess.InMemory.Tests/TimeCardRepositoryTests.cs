@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using Salary.Models.Errors;
 using System;
+using Salary.DataAccess.Implementation;
 using Xunit;
 
 namespace Salary.DataAccess.InMemory.Tests
@@ -13,7 +13,7 @@ namespace Salary.DataAccess.InMemory.Tests
 
         public TimeCardRepositoryTests()
         {
-            _repository = new TimeCardRepository(new InMemoryEntityForEmployeeStorage());
+            _repository = new TimeCardRepository(new EntityForEmployeeBaseRepository(new InMemoryStorage<EntityForEmployee>()));
         }
 
         [Fact]

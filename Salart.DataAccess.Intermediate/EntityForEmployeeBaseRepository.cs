@@ -1,5 +1,4 @@
-﻿using Salary.DataAccess.Intermediate;
-using Salary.Models;
+﻿using Salary.Models;
 using Salary.Models.Errors;
 using System;
 using System.Collections.Generic;
@@ -8,11 +7,21 @@ using System.Net;
 
 //[assembly: InternalsVisibleTo("Salary.DataAccess.InMemory.Tests")]
 
-namespace Salary.DataAccess.InMemory
+namespace Salary.DataAccess.Implementation
 {
-    public class InMemoryEntityForEmployeeStorage : IEntityForEmployeeStorage
+    public class EntityForEmployeeBaseRepository : IEntityForEmployeeBaseRepository, IDisposable
     {
-        private readonly Dictionary<int, EntityForEmployee> _storage = new Dictionary<int, EntityForEmployee>();
+        private readonly IStorage<EntityForEmployee> _storage;
+
+        public EntityForEmployeeBaseRepository(IStorage<EntityForEmployee> storage)
+        {
+            _storage = storage;
+        }
+
+        public void Dispose()
+        {
+            _storage.Dispose();
+        }
 
         public int Create<T>(T inMemoryInstance, Func<T, EntityForEmployee> cloner) where T : EntityForEmployee
         {
@@ -20,11 +29,11 @@ namespace Salary.DataAccess.InMemory
             if (cloner == null) throw new ArgumentNullException(nameof(cloner));
             lock (_storage)
             {
-                var id = _storage.Count == 0 ? 1 : (_storage.Keys.Max() + 1);
+                var id = _storage.Entities.Count == 0 ? 1 : (_storage.Entities.Keys.Max() + 1);
 
                 var clone = cloner(inMemoryInstance);
                 clone.Id = id;
-                _storage.Add(id, clone);
+                _storage.Entities.Add(id, clone);
 
                 return id;
             }
@@ -34,10 +43,10 @@ namespace Salary.DataAccess.InMemory
         {
             lock (_storage)
             {
-                if (_storage.ContainsKey(id))
+                if (_storage.Entities.ContainsKey(id))
                 {
-                    var instance = _storage[id];
-                    _storage.Remove(id);
+                    var instance = _storage.Entities[id];
+                    _storage.Entities.Remove(id);
                     return instance as T;
                 }
 
@@ -47,8 +56,8 @@ namespace Salary.DataAccess.InMemory
 
         public EntityForEmployee Get(int id)
         {
-            if (_storage.ContainsKey(id))
-                return _storage[id];
+            if (_storage.Entities.ContainsKey(id))
+                return _storage.Entities[id];
 
             throw new RepositoryException($"Cannot find {typeof(EntityForEmployee).Name} with id '{id}'.")
             {
@@ -78,7 +87,7 @@ namespace Salary.DataAccess.InMemory
 
         private ICollection<EntityForEmployee> GetBy(int employeeId, Func<EntityForEmployee, bool> predicate, string suffix)
         {
-            var timeCards = _storage.Values.Where(val => val.EmployeeId == employeeId && predicate(val)).ToList();
+            var timeCards = _storage.Entities.Values.Where(val => val.EmployeeId == employeeId && predicate(val)).ToList();
             if (timeCards.Count != 0)
                 return timeCards;
 

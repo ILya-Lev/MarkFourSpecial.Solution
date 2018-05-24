@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Salary.DataAccess;
+using Salary.DataAccess.Implementation;
 using Salary.DataAccess.InMemory;
-using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using Salary.Services;
 using Salary.Services.Implementation;
@@ -46,19 +46,25 @@ namespace Salary.WebApi
             var builder = new ContainerBuilder();
 
             builder.Populate(services);
+            RegisterStorage(builder);
             RegisterRepositories(builder);
             RegisterServices(builder);
 
             return new AutofacServiceProvider(builder.Build());
         }
 
+        private void RegisterStorage(ContainerBuilder builder)
+        {
+            builder.RegisterType<InMemoryStorage<Employee>>().As<IStorage<Employee>>().SingleInstance();
+            builder.RegisterType<InMemoryStorage<EntityForEmployee>>().As<IStorage<EntityForEmployee>>()
+                .SingleInstance();
+        }
+
         private static void RegisterRepositories(ContainerBuilder builder)
         {
-            builder.RegisterType<InMemoryEmployeeRepository>().As<IEmployeeRepository>()
-                .SingleInstance();
+            builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
 
-            builder.RegisterType<InMemoryEntityForEmployeeStorage>().As<IEntityForEmployeeStorage>()
-                .SingleInstance();
+            builder.RegisterType<EntityForEmployeeBaseRepository>().As<IEntityForEmployeeBaseRepository>();
             builder.RegisterType<TimeCardRepository>().As<IEntityForEmployeeRepository<TimeCard>>();
             builder.RegisterType<SalesReceiptRepository>().As<IEntityForEmployeeRepository<SalesReceipt>>();
             builder.RegisterType<ServiceChargeRepository>().As<IEntityForEmployeeRepository<ServiceCharge>>();

@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using Salary.DataAccess.Intermediate;
 using Salary.Models;
 using System;
+using Salary.DataAccess.Implementation;
 using Xunit;
 
 namespace Salary.DataAccess.InMemory.Tests
@@ -12,7 +12,7 @@ namespace Salary.DataAccess.InMemory.Tests
 
         public ServiceChargeRepositoryTests()
         {
-            _repository = new ServiceChargeRepository(new InMemoryEntityForEmployeeStorage());
+            _repository = new ServiceChargeRepository(new EntityForEmployeeBaseRepository(new InMemoryStorage<EntityForEmployee>()));
         }
 
         [Fact]
