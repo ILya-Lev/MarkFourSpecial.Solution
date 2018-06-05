@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Salary.DataAccess;
 using Salary.DataAccess.Implementation;
+using Salary.DataAccess.InMemory;
 using Salary.DataAccess.OnDisk;
 using Salary.Models;
 using Salary.Services;
@@ -46,8 +47,11 @@ namespace Salary.WebApi
             var builder = new ContainerBuilder();
 
             builder.Populate(services);
+#if ONDISK
             RegisterOnDiskStorage(builder);
-            //RegisterInMemoryStorage(builder);
+#else
+            RegisterInMemoryStorage(builder);
+#endif
             RegisterRepositories(builder);
             RegisterServices(builder);
 
@@ -60,12 +64,13 @@ namespace Salary.WebApi
             builder.RegisterType<OnDiskStorage<EntityForEmployee>>().As<IStorage<EntityForEmployee>>()
                 .SingleInstance();
         }
-        //private void RegisterInMemoryStorage(ContainerBuilder builder)
-        //{
-        //    builder.RegisterType<InMemoryStorage<Employee>>().As<IStorage<Employee>>().SingleInstance();
-        //    builder.RegisterType<InMemoryStorage<EntityForEmployee>>().As<IStorage<EntityForEmployee>>()
-        //        .SingleInstance();
-        //}
+
+        private void RegisterInMemoryStorage(ContainerBuilder builder)
+        {
+            builder.RegisterType<InMemoryStorage<Employee>>().As<IStorage<Employee>>().SingleInstance();
+            builder.RegisterType<InMemoryStorage<EntityForEmployee>>().As<IStorage<EntityForEmployee>>()
+                .SingleInstance();
+        }
 
         private static void RegisterRepositories(ContainerBuilder builder)
         {
