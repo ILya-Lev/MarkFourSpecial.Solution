@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{2995D7C7-18D7-488F-8A27-576400229642}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kettle.BL", "Kettle.BL\Kettle.BL.csproj", "{A910C527-8312-484C-A35A-D64D19646401}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BobsMachine", "BobsMachine\BobsMachine.csproj", "{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.Models", "Salary.Models\Salary.Models.csproj", "{FE521539-F995-45DC-B0D6-04B544A83379}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salary.Services", "Salary.Services\Salary.Services.csproj", "{F71AD7CD-8FA5-4A3E-9DCE-0CF25A0581D1}"
@@ -37,24 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2995D7C7-18D7-488F-8A27-576400229642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2995D7C7-18D7-488F-8A27-576400229642}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2995D7C7-18D7-488F-8A27-576400229642}.InMemory|Any CPU.ActiveCfg = InMemory|Any CPU
-		{2995D7C7-18D7-488F-8A27-576400229642}.OnDisk|Any CPU.ActiveCfg = OnDisk|Any CPU
-		{2995D7C7-18D7-488F-8A27-576400229642}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2995D7C7-18D7-488F-8A27-576400229642}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A910C527-8312-484C-A35A-D64D19646401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A910C527-8312-484C-A35A-D64D19646401}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A910C527-8312-484C-A35A-D64D19646401}.InMemory|Any CPU.ActiveCfg = InMemory|Any CPU
-		{A910C527-8312-484C-A35A-D64D19646401}.OnDisk|Any CPU.ActiveCfg = OnDisk|Any CPU
-		{A910C527-8312-484C-A35A-D64D19646401}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A910C527-8312-484C-A35A-D64D19646401}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}.InMemory|Any CPU.ActiveCfg = InMemory|Any CPU
-		{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}.OnDisk|Any CPU.ActiveCfg = OnDisk|Any CPU
-		{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C572345C-7BEE-4C2E-81D6-CF6ACADF1E4C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE521539-F995-45DC-B0D6-04B544A83379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE521539-F995-45DC-B0D6-04B544A83379}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE521539-F995-45DC-B0D6-04B544A83379}.InMemory|Any CPU.ActiveCfg = InMemory|Any CPU
