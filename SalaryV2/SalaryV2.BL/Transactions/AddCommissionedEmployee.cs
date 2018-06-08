@@ -16,9 +16,9 @@ namespace SalaryV2.BL.Transactions
             _commissionedRate = commissionedRate;
         }
 
-        protected override IPaymentSchedule GetPaymentSchedule() => new BiweeklySchedule();
+        protected override IPaymentSchedule MakeSchedule() => new BiweeklySchedule();
 
-        protected override IPaymentClassification GetPaymentClassification(int employeeId)
+        protected override IPaymentClassification MakeClassification(int employeeId)
         {
             var salesReceiptProvider = new SalesReceiptProvider();
             return new CommissionedClassification(_commissionedRate, _salary, employeeId, salesReceiptProvider);

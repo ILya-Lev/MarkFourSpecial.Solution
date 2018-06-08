@@ -25,16 +25,16 @@ namespace SalaryV2.BL.Transactions
                 Name = _name,
                 Address = _address,
                 PaymentMethod = new HoldMethod(),
-                PaymentSchedule = GetPaymentSchedule()
+                PaymentSchedule = MakeSchedule()
             };
             //todo: Affiliations ?
             var id = _employeeRepository.Create(employee);
-            employee.PaymentClassification = GetPaymentClassification(id);
+            employee.PaymentClassification = MakeClassification(id);
             return id;
         }
 
-        protected abstract IPaymentSchedule GetPaymentSchedule();
+        protected abstract IPaymentSchedule MakeSchedule();
 
-        protected abstract IPaymentClassification GetPaymentClassification(int employeeId);
+        protected abstract IPaymentClassification MakeClassification(int employeeId);
     }
 }

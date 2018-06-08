@@ -14,9 +14,9 @@ namespace SalaryV2.BL.Transactions
             _salary = salary;
         }
 
-        protected override IPaymentSchedule GetPaymentSchedule() => new MonthlySchedule();
+        protected override IPaymentSchedule MakeSchedule() => new MonthlySchedule();
 
-        protected override IPaymentClassification GetPaymentClassification(int employeeId)
+        protected override IPaymentClassification MakeClassification(int employeeId)
         {
             return new SalariedClassification(_salary);
         }

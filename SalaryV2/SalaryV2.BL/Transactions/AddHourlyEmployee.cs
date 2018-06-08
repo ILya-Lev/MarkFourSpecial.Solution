@@ -14,9 +14,9 @@ namespace SalaryV2.BL.Transactions
             _hourlyRate = hourlyRate;
         }
 
-        protected override IPaymentSchedule GetPaymentSchedule() => new WeeklySchedule();
+        protected override IPaymentSchedule MakeSchedule() => new WeeklySchedule();
 
-        protected override IPaymentClassification GetPaymentClassification(int employeeId)
+        protected override IPaymentClassification MakeClassification(int employeeId)
         {
             var timeCardProvider = new TimeCardProvider();
             return new HourlyClassification(employeeId, _hourlyRate, 1.5m, 2.5m, timeCardProvider);
