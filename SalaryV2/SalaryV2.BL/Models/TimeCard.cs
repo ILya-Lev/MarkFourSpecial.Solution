@@ -2,11 +2,12 @@
 
 namespace SalaryV2.BL.Models
 {
-    public class TimeCard
+    public class TimeCard : EntityForEmployee
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public DateTime At { get; set; }
+        public TimeCard(int employeeId, DateTime? at = null) : base(employeeId, at)
+        {
+        }
+
         public float Hours { get; set; }
     }
 }

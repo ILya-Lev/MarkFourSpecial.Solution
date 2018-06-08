@@ -1,12 +1,14 @@
-﻿using System;
+﻿using SalaryV2.BL.Transactions;
+using System;
 
 namespace SalaryV2.BL.Models
 {
-    public class SalesReceipt
+    public class SalesReceipt : EntityForEmployee
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public DateTime At { get; set; }
+        public SalesReceipt(int employeeId, DateTime? at = null) : base(employeeId, at)
+        {
+        }
+
         public decimal Amount { get; set; }
     }
 }

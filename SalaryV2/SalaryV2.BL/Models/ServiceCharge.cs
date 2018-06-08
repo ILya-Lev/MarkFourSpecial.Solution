@@ -2,11 +2,12 @@
 
 namespace SalaryV2.BL.Models
 {
-    public class ServiceCharge
+    public class ServiceCharge : EntityForEmployee
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public DateTime At { get; set; }
+        public ServiceCharge(int employeeId, DateTime? at = null) : base(employeeId, at)
+        {
+        }
+
         public decimal Amount { get; set; }
     }
 }
